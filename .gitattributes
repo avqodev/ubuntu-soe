@@ -1,0 +1,15 @@
+* text=auto
+
+*.c text
+*.h text
+*.java text
+*.kt text
+*.groovy text
+*.js text
+
+*.sln text eol=crlf
+
+*.png binary
+*.jpg binary
+*.svg binary
+*.jar binary

@@ -1,0 +1,1 @@
+../install-nvm-node-npm-packages.sh

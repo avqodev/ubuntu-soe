@@ -1,0 +1,1 @@
+../unassign-ubuntu-jetbrains-shortcuts.sh

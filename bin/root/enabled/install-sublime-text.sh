@@ -1,0 +1,1 @@
+../install-sublime-text.sh

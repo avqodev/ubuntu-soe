@@ -1,0 +1,1 @@
+../remove-guest-account.sh

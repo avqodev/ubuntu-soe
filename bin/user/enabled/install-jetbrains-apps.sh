@@ -1,0 +1,1 @@
+../install-jetbrains-apps.sh
