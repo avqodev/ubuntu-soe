@@ -1,5 +1,5 @@
 # ubuntu-soe
-Standard operating environment for java development.
+Standard operating environment for java development on Ubuntu.
 
 To install simply open a new terminal and enter:
 ```sh
