@@ -71,11 +71,11 @@ SOE_DOWNLOADS=$SOE_INSTALL/temp
 
 execute-root-scripts() {
     run-parts \
-        --test --regex "^${1:-.*\.sh}$" --exit-on-error --new-session --verbose $SOE_INSTALL/bin/root/enabled --
+        --regex "^${1:-.*\.sh}$" --exit-on-error --new-session --verbose $SOE_INSTALL/bin/root/enabled --
 }
 
 execute-user-scripts() {	
-    sudo -H -u $SOE_USER run-parts --test --regex "^${1:-.*\.sh}$" --exit-on-error --new-session --verbose $SOE_INSTALL/bin/user/enabled --
+    sudo -H -u $SOE_USER run-parts --regex "^${1:-.*\.sh}$" --exit-on-error --new-session --verbose $SOE_INSTALL/bin/user/enabled --
 }
 
 if [[ $TARGET_SCRIPT ]]; then
