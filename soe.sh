@@ -21,7 +21,7 @@ SOE_USER=$USER
 SOE_INSTALL_DIR=/home/$SOE_USER/.soe
 SOE_VERSION="1.0.0"
 
-SOE_URL="https://github.com/avqodev/ubuntu-soe/archive/master.zip"
+SOE_URL="https://raw.githubusercontent.com/avqodev/ubuntu-soe/master/soe.sh"
 SOE_STAGE_DIR="${SOE_INSTALL_DIR}/stage"
 SOE_ZIP="${SOE_STAGE_DIR}/soe-${SOE_VERSION}.zip"
 
