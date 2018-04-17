@@ -37,7 +37,7 @@ download() {
 }
 
 set_version() {
-    mkdir --parents $SOE_INSTALL/var
+    mkdir --parents $SOE_INSTALL_DIR/var
     echo "$SOE_VERSION" > "${SOE_INSTALL_DIR}/var/version"
 }
 
