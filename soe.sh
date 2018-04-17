@@ -31,8 +31,9 @@ download() {
     mkdir --parents $SOE_INSTALL_DIR/logs
     mkdir --parents $SOE_INSTALL_DIR/temp
     curl --location --progress-bar "${SOE_URL}" > "$SOE_ZIP"
-    unzip -qo "$SOE_ZIP" -d "$SOE_INSTALL_DIR"
-    mv "$SOE_STAGE_DIR"/* "$SOE_INSTALL_DIR"
+    unzip -qo "$SOE_ZIP" -d "$SOE_STAGE_DIR"
+    rm "$SOE_ZIP"
+    mv "$SOE_STAGE_DIR"/ubuntu-soe-master/* "$SOE_INSTALL_DIR"
 }
 
 set_version() {
