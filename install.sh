@@ -18,9 +18,13 @@
 set -eo pipefail
 
 SOE_USER=$SUDO_USER
-SOE_INSTALL=/home/$SOE_USER/.soe
+_SCRIPT="$(readlink -f ${BASH_SOURCE[0]})"
+SOE_INSTALL="$(dirname $_SCRIPT)"
+SOE_VERSION="1.0.0"
 
 SOE_URL="https://github.com/avqodev/ubuntu-soe/archive/master.zip"
+SOE_STAGE_DIR="${SOE_INSTALL_DIR}/stage"
+SOE_ZIP="${SOE_STAGE_DIR}/soe-${SOE_VERSION}.zip"
 
 OPTS=$(getopt -n 'parse-options' -o s:u:iz --long script:,user:,development-user,no-download -- "$@")
 
@@ -28,10 +32,10 @@ eval set -- "$OPTS"
 
 while true; do
     case "$1" in
+        -f | --force-download ) FORCE_DOWNLOAD=1; shift ;;
         -i | --development-user ) SOE_USER=development; NEW_USER=1; shift ;;
         -s | --script ) TARGET_SCRIPT="$2"; shift 2 ;;
         -u | --user ) SOE_USER="$2"; NEW_USER=1; shift 2 ;;
-        -z | --no-download ) NO_DOWNLOAD=1; SOE_INSTALL=.; shift ;;
         -- ) shift; break ;;
         * ) break ;;
     esac
@@ -45,20 +49,20 @@ if [[ $HELP ]]; then
 fi
 
 if [[ $NEW_USER ]]; then
-    if ! id $SOE_USER >/dev/null 2>&1; then
-        adduser $SOE_USER
-        usermod -aG sudo $SOE_USER
-    fi
+    id -u $SOE_USER &>/dev/null || adduser $SOE_USER
 fi
+usermod -aG sudo $SOE_USER
 
-if [[ ! $NO_DOWNLOAD && ! ]]; then
+if [[ $FORCE_DOWNLOAD ]]; then
     download() {
-        sudo -H -u $SOE_USER mkdir --parents $SOE_INSTALL
-        sudo -H -u $SOE_USER mkdir --parents $SOE_INSTALL/logs
-        sudo -H -u $SOE_USER mkdir --parents $SOE_INSTALL/temp
-        wget $SOE_URL --directory-prefix=/tmp
-        unzip /tmp/master.zip -d $SOE_INSTALL
-        chown -R $SOE_USER:$SOE_USER $SOE_INSTALL
+        mkdir --parents $SOE_INSTALL_DIR
+        mkdir --parents $SOE_STAGE_DIR
+        mkdir --parents $SOE_INSTALL_DIR/logs
+        mkdir --parents $SOE_INSTALL_DIR/temp
+        curl --location --progress-bar "${SOE_URL}" > "$SOE_ZIP"
+        unzip -qo "$SOE_ZIP" -d "$SOE_STAGE_DIR"
+        rm "$SOE_ZIP"
+        mv "$SOE_STAGE_DIR"/ubuntu-soe-master/* "$SOE_INSTALL_DIR"
     }
     download
 fi
